@@ -17,7 +17,7 @@ import Loading from './component/Loading'
 
 
 function App() {
-const [city,setcity]=useState('delhi')
+const [city,setcity]=useState(null)
 const [units,setUnits]=useState('metric')
 const [weather,setWeather]=useState(null)
 const [search ,setSearch]=useState('')
@@ -36,8 +36,12 @@ const snow=['light snow	','snow','heavy snow','sleet','light shower sleet','show
 const mist=['mist','smoke','haze','sand/dust whirls','fog','sand','dust','volcanic ash','squalls','tornado']
 const rainy=['light rain','moderate rain','heavy intensity rain','very heavy rain','extreme rain','freezing rain','light intensity shower rain','shower rain','heavy intensity shower rain','ragged shower rain	']
 const handelCity=()=>{
-setcity(search)
-setSearch('')
+
+  if(search){
+    setcity(search)
+    setSearch('')
+  }
+
 }
 
 const handleToggletemp=(type)=>{
@@ -52,31 +56,38 @@ const handleToggletemp=(type)=>{
 }
 
 // for the cuurrent location of the user 
-// useEffect(() => {
-
-//     const getData = async () => {
-//       try {
-//         const data =await fetchCurrentLocation(units);
-//         if (data) {
-//         console.log(data)
-//         setWeather(data);
+useEffect(() => {
+if(!city){
+    const getData = async () => {
+      setloading(true)
+      try {
+        const data =await fetchCurrentLocation(units);
+        if (data) {
+        console.log(data)
+        setWeather(data);
+        setloading(false)
       
-//         } else {
-//           console.error('Weather data is undefined.');
-//         }
-//       } catch (error) {
-//         console.error('Error fetching weather data:', error);
-//       }
-//     };
-//     getData();
+        } else {
+          console.error('Weather data is undefined.');
+          setloading(false)
+
+        }
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        setloading(false)
+
+      }
+    };
+    getData();
  
+}
 
 
-
-// }, [units]);
+}, [units]);
 
 useEffect(()=>{
 
+  if(city){
   const fetchData=async()=>{
     setloading(true)
     try {
@@ -94,6 +105,7 @@ setloading(false)
 
   }
   fetchData()
+}
 
 },[city,units])
 

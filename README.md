@@ -11,7 +11,9 @@ Currently, two official plugins are available:
 
 1. In this project i have use openweathermap api to integrate the current data of weather.
 
-2.so first when we visit the page its show the default city weather data 
+2.so first when we visit the page its show the current  city   weather data of the user 
+
+
 3.there is search input you can search any city in this input if the city is not exists its show error page and if the city is exists so its show the weather data of the city
 
 4.the backround is dynamic its change accordinglly to the weather 
